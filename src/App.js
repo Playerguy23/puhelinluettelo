@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -19,6 +19,9 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
 
+      {persons.map(person => {
+        return <p key={person.name}>{person.name}</p>
+      })}
     </div>
   )
 
