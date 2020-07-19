@@ -21,12 +21,12 @@ const App = () => {
   const handleAddName = (event) => {
     event.preventDefault();
 
+    let nonAddable;
+    
     const newObject = {
       name: newName,
       number: newNumber
     }
-
-    let nonAddable;
 
     persons.forEach(person => {
       nonAddable = person.name === newName;
