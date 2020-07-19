@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -22,7 +24,7 @@ const App = () => {
     event.preventDefault();
 
     let nonAddable;
-    
+
     const newObject = {
       name: newName,
       number: newNumber
@@ -43,18 +45,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={handleAddName}>
-        <div>name: <input type="text" onChange={handleNameChange} /></div>
-        <div>number: <input type="text" onChange={handleNumberChange} /></div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      
+      <PersonForm handleAddName={handleAddName} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
+
       <h2>Numbers</h2>
 
-      {persons.map(person => {
-        return <p key={person.name}>{person.name} {person.number}</p>
-      })}
+      <Persons persons={persons} />
     </div>
   )
 
