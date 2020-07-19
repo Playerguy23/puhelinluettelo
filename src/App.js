@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
-  ])
-  const [newName, setNewName] = useState('')
+  ]);
+  const [newName, setNewName] = useState('');
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -12,13 +12,28 @@ const App = () => {
 
   const handleAddName = (event) => {
     event.preventDefault();
-    
+
     const newObject = {
       name: newName
     }
 
-    setPersons(persons.concat(newObject));
+    let addable = true;
+
+    persons.forEach(person => {
+      if (person.name === newName) {
+        alert(`${newName} is alredy in use.`);
+
+        addable = false;
+      }
+    });
+
+    if (addable) {
+      setPersons(persons.concat(newObject));
+    }
+
     setNewName('');
+
+    event.target.reset();
   }
 
   return (
@@ -26,7 +41,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={handleAddName}>
         <div>
-          name: <input onChange={handleNameChange} />
+          name: <input type="text" onChange={handleNameChange} />
         </div>
         <div>
           <button type="submit">add</button>
