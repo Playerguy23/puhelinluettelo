@@ -45,6 +45,19 @@ const App = () => {
     event.target.reset();
   }
 
+  const handleDeletePerson = (id) => {
+    const person = persons.map(person => person.id === id ? person : alert('Unable to delete'));
+
+    if (window.confirm(`Delete ${person.name}?`)) {
+
+      requestService.deletePerson(id, person)
+        .then(response => {
+          setPersons(persons.filter(person => person !== response.data));
+        })
+    }
+
+  }
+
   const getPersonsByRequest = () => {
     requestService.getAllPersons()
       .then(response => {
@@ -52,7 +65,7 @@ const App = () => {
       });
   }
 
-  useEffect(getPersonsByRequest, []);
+  useEffect(getPersonsByRequest, [handleDeletePerson]);
 
   return (
     <div>
@@ -62,7 +75,9 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Persons persons={persons} />
+      {persons.map(person => {
+        return <Persons key={person.id} person={person} handleDelete={() => handleDeletePerson(person.id)} />
+      })}
     </div>
   )
 

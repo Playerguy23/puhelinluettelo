@@ -1,29 +1,3 @@
 {
-  "persons": [
-    {
-      "name": "Joonatan Taajamaa",
-      "number": "+358-3389232",
-      "id": 5
-    },
-    {
-      "name": "Testi",
-      "number": "219021921",
-      "id": 6
-    },
-    {
-      "name": "Ela",
-      "number": "329032902",
-      "id": 7
-    },
-    {
-      "name": "Voi ei",
-      "number": "329093203",
-      "id": 8
-    },
-    {
-      "name": "Essi Esimerkki",
-      "number": "+358-32898312",
-      "id": 9
-    }
-  ]
+  "persons": []
 }
