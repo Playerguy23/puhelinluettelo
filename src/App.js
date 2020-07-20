@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-import axios from 'axios';
+import requestService from './services/requestService';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -30,7 +30,14 @@ const App = () => {
       nonAddable = person.name === newName;
     });
 
-    nonAddable ? alert(`${newName} is alredy in use.`) : setPersons(persons.concat(newObject));
+    if (nonAddable) {
+      alert(`${newName} is alredy in use.`);
+    } else {
+      requestService.createPerson(newObject)
+        .then(response => {
+          setPersons(persons.concat(response.data));
+        });
+    }
 
     setNewNumber('');
     setNewName('');
@@ -39,9 +46,9 @@ const App = () => {
   }
 
   const getPersonsByRequest = () => {
-    axios.get('http://localhost:3001/persons')
+    requestService.getAllPersons()
       .then(response => {
-        setPersons(persons.concat(response.data));
+        setPersons(response.data);
       });
   }
 
@@ -50,7 +57,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      
+
       <PersonForm handleAddName={handleAddName} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
 
       <h2>Numbers</h2>
