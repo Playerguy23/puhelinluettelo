@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import requestService from './services/requestService';
+import Notification from './components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [passMessage, setPassMessage] = useState(null);
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -36,6 +38,12 @@ const App = () => {
       requestService.createPerson(newObject)
         .then(response => {
           setPersons(persons.concat(response.data));
+
+          setPassMessage(`Added ${newObject.name}`);
+
+          setTimeout(() => {
+            setPassMessage(null)
+          }, 5000)
         });
     }
 
@@ -70,6 +78,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={passMessage} />
 
       <PersonForm handleAddName={handleAddName} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
 
